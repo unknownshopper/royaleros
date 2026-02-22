@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Royaleros Tabasco</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="index.html">Royaleros Tabasco</a>
+        <nav class="nav">
+          <a class="active" href="index.html">Inicio</a>
+          <a href="#eventos">Eventos</a>
+          <a href="#rutas">Rutas</a>
+          <a href="#registro">Registro</a>
+          <a href="#patrocinios">Patrocinios</a>
+          <a href="evaluacion.html">Evaluación</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Royaleros Tabasco</h1>
+        <p class="muted">
+          Club de motociclistas Royal Enfield en Tabasco. Rodadas seguras, comunidad y aprendizaje.
+        </p>
+        <div class="actions">
+          <a class="btn" href="#registro">Unirme al club</a>
+          <a class="btn btn-secondary" href="#eventos">Ver eventos</a>
+          <a class="btn btn-secondary" href="evaluacion.html">Evaluación del curso</a>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <section class="card" id="eventos">
+          <h2>Próximos eventos</h2>
+          <p class="muted">Agenda preliminar. Actualizaremos fechas y puntos de reunión.</p>
+          <div class="form">
+            <div class="q">
+              <strong>Rodada de integración</strong>
+              <div class="muted">Fecha: Por confirmar</div>
+              <div class="muted">Lugar: Por confirmar</div>
+            </div>
+            <div class="q">
+              <strong>Charla: Seguridad vial</strong>
+              <div class="muted">Fecha: Por confirmar</div>
+              <div class="muted">Tema: Anticipación y frenado</div>
+            </div>
+            <div class="q">
+              <strong>Convivencia Royaleros</strong>
+              <div class="muted">Fecha: Por confirmar</div>
+              <div class="muted">Actividad: Ruta + café</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="rutas">
+          <h2>Próximas rutas</h2>
+          <p class="muted">Rutas planeadas por nivel. Se publicarán detalles antes de cada salida.</p>
+          <div class="form">
+            <div class="q">
+              <strong>Ruta corta</strong>
+              <div class="muted">Distancia: 30–60 km</div>
+              <div class="muted">Nivel: Principiante</div>
+            </div>
+            <div class="q">
+              <strong>Ruta media</strong>
+              <div class="muted">Distancia: 120–200 km</div>
+              <div class="muted">Nivel: Intermedio</div>
+            </div>
+            <div class="q">
+              <strong>Ruta larga</strong>
+              <div class="muted">Distancia: 250+ km</div>
+              <div class="muted">Nivel: Avanzado</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="card" id="registro" style="margin-top: 14px;">
+        <h2>Registro</h2>
+        <p class="muted">
+          Regístrate para recibir avisos de eventos, rutas, requisitos y logística.
+        </p>
+
+        <form class="form" action="#" method="post">
+          <div class="grid">
+            <label class="field">
+              <span>Nombre</span>
+              <input type="text" name="nombre" autocomplete="name" required />
+            </label>
+            <label class="field">
+              <span>Teléfono</span>
+              <input type="tel" name="telefono" autocomplete="tel" />
+            </label>
+            <label class="field">
+              <span>Correo</span>
+              <input type="email" name="correo" autocomplete="email" />
+            </label>
+          </div>
+
+          <div class="grid">
+            <label class="field">
+              <span>Motocicleta</span>
+              <input type="text" name="moto" placeholder="Royal Enfield (modelo)" />
+            </label>
+            <label class="field">
+              <span>Cilindraje</span>
+              <input type="text" name="cc" inputmode="numeric" placeholder="350 / 411 / 650..." />
+            </label>
+            <label class="field">
+              <span>Nivel</span>
+              <input type="text" name="nivel" placeholder="Principiante / Intermedio / Avanzado" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Comentario</span>
+            <textarea name="comentario" rows="3" placeholder="Cuéntanos qué tipo de rutas te interesan..."></textarea>
+          </label>
+
+          <div class="actions">
+            <button class="btn" type="submit">Enviar registro</button>
+            <a class="btn btn-secondary" href="evaluacion.html">Ir a evaluación</a>
+          </div>
+        </form>
+      </section>
+
+      <section class="card" id="patrocinios" style="margin-top: 14px;">
+        <h2>Patrocinios</h2>
+        <p class="muted">
+          ¿Quieres ser patrocinador? Buscamos apoyo para seguridad, hidratación, señalización, mecánica y primeros auxilios.
+        </p>
+        <div class="form">
+          <div class="q">
+            <strong>Beneficios para patrocinadores</strong>
+            <div class="muted">Presencia en eventos, menciones y publicaciones del club.</div>
+          </div>
+          <div class="q">
+            <strong>Contacto</strong>
+            <div class="muted">Agrega aquí WhatsApp/Instagram/Facebook cuando lo tengas.</div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="muted" style="padding: 18px 0;">
+        Royaleros Tabasco · Sitio en construcción
+      </footer>
+    </main>
+  </body>
+</html>

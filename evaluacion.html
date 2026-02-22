@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Evaluación - Royaleros Tabasco</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="index.html">Royaleros Tabasco</a>
+        <nav class="nav">
+          <a href="index.html">Inicio</a>
+          <a class="active" href="evaluacion.html">Evaluación</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h1>Evaluación del curso de seguridad vial para motociclistas</h1>
+        <p class="muted">
+          Llena la evaluación y al final puedes imprimirla o guardarla como PDF.
+        </p>
+        <p class="muted"></p>
+          Para enviar por correo, se abrirá tu app de correo con el mensaje prellenado.
+        </p>
+
+        <form class="form" id="evaluacion-form" action="#" method="post">
+          <div class="grid">
+            <label class="field">
+              <span>Nombre</span>
+              <input name="nombre" type="text" autocomplete="name" required />
+            </label>
+            <label class="field">
+              <span>Fecha</span>
+              <input name="fecha" type="date" required />
+            </label>
+            <label class="field">
+              <span>Calificación</span>
+              <input name="calificacion" type="text" inputmode="numeric" />
+            </label>
+          </div>
+
+          <fieldset class="q">
+            <legend>1) ¿Cuál es la distancia mínima entre dos motociclistas en ruta?</legend>
+            <textarea name="p1" rows="3" required></textarea>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>2) ¿Cuál es el mejor casco para proteger la cabeza del motociclista?</legend>
+            <textarea name="p2" rows="3" required></textarea>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>
+              3) En el frenado de emergencia, ¿cuál de los dos frenos (delante o trasero) se debe aplicar?
+            </legend>
+            <textarea name="p3" rows="3" required></textarea>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>
+              4) En las técnicas de anticipación se debe prever cualquier invasión en la vía. ¿Verdadero o Falso?
+            </legend>
+            <div class="choices">
+              <label><input type="radio" name="p4" value="V" required /> Verdadero</label>
+              <label><input type="radio" name="p4" value="F" required /> Falso</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>
+              5) La revisión de los neumáticos es esencial antes de iniciar a rodar. ¿Verdadero o Falso?
+            </legend>
+            <div class="choices">
+              <label><input type="radio" name="p5" value="V" required /> Verdadero</label>
+              <label><input type="radio" name="p5" value="F" required /> Falso</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>
+              6) Cuando llueve, NO circular sobre las marcas del pavimento o zonas deslizantes. ¿Verdadero o Falso?
+            </legend>
+            <div class="choices">
+              <label><input type="radio" name="p6" value="V" required /> Verdadero</label>
+              <label><input type="radio" name="p6" value="F" required /> Falso</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>
+              7) Con niebla NO se debe circular a una velocidad que permita detenerse dentro del campo de visión del conductor.
+              ¿Verdadero o Falso?
+            </legend>
+            <div class="choices">
+              <label><input type="radio" name="p7" value="V" required /> Verdadero</label>
+              <label><input type="radio" name="p7" value="F" required /> Falso</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>8) ¿Qué es la regla P.A.S, aplicable cuando ocurre un accidente?</legend>
+            <textarea name="p8" rows="3" required></textarea>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>
+              9) Los conductores experimentados mejoran la estrategia de manejo utilizando el proceso EEE
+              (Explorar–Evaluar–Ejecutar). ¿Verdadero o Falso?
+            </legend>
+            <div class="choices">
+              <label><input type="radio" name="p9" value="V" required /> Verdadero</label>
+              <label><input type="radio" name="p9" value="F" required /> Falso</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend>
+              10) La intersección de 2 calles es el lugar donde ocurren la menor cantidad de los accidentes en motocicleta
+              (Reporte Hurt - 1988). ¿Verdadero o Falso?
+            </legend>
+            <div class="choices">
+              <label><input type="radio" name="p10" value="V" required /> Verdadero</label>
+              <label><input type="radio" name="p10" value="F" required /> Falso</label>
+            </div>
+          </fieldset>
+
+          <div class="actions">
+            <button type="submit" class="btn" id="btn-send">Enviar por correo</button>
+            <button type="button" class="btn" id="btn-print">Imprimir / Guardar como PDF</button>
+            <button type="reset" class="btn btn-secondary">Limpiar</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      const form = document.getElementById('evaluacion-form');
+      const EMAIL_TO = 'bracho.manuel@outlook.com';
+
+      function valueOrEmpty(fd, key) {
+        const v = fd.get(key);
+        return (v ?? '').toString().trim();
+      }
+
+      function buildMailBody(fd) {
+        const lines = [];
+        lines.push('Evaluación del curso de seguridad vial para motociclistas');
+        lines.push('');
+        lines.push(`Nombre: ${valueOrEmpty(fd, 'nombre')}`);
+        lines.push(`Fecha: ${valueOrEmpty(fd, 'fecha')}`);
+        lines.push(`Calificación: ${valueOrEmpty(fd, 'calificacion')}`);
+        lines.push('');
+
+        lines.push(`1) Distancia mínima entre motociclistas en ruta:`);
+        lines.push(valueOrEmpty(fd, 'p1'));
+        lines.push('');
+
+        lines.push(`2) Mejor casco para proteger la cabeza:`);
+        lines.push(valueOrEmpty(fd, 'p2'));
+        lines.push('');
+
+        lines.push(`3) En frenado de emergencia, ¿qué freno se debe aplicar?:`);
+        lines.push(valueOrEmpty(fd, 'p3'));
+        lines.push('');
+
+        lines.push(`4) Anticipación: prever invasión en la vía (V/F): ${valueOrEmpty(fd, 'p4')}`);
+        lines.push(`5) Revisión de neumáticos antes de rodar (V/F): ${valueOrEmpty(fd, 'p5')}`);
+        lines.push(`6) Lluvia: no circular sobre marcas/zona deslizante (V/F): ${valueOrEmpty(fd, 'p6')}`);
+        lines.push(`7) Niebla: velocidad para detenerse en campo de visión (V/F): ${valueOrEmpty(fd, 'p7')}`);
+        lines.push('');
+
+        lines.push(`8) Regla P.A.S:`);
+        lines.push(valueOrEmpty(fd, 'p8'));
+        lines.push('');
+
+        lines.push(`9) Proceso EEE (Explorar–Evaluar–Ejecutar) (V/F): ${valueOrEmpty(fd, 'p9')}`);
+        lines.push(`10) Intersección de 2 calles: menor cantidad de accidentes (V/F): ${valueOrEmpty(fd, 'p10')}`);
+        lines.push('');
+        return lines.join('\n');
+      }
+
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (!form.reportValidity()) return;
+
+        const fd = new FormData(form);
+        const nombre = valueOrEmpty(fd, 'nombre') || 'Sin nombre';
+        const fecha = valueOrEmpty(fd, 'fecha') || '';
+        const subject = `Evaluación curso seguridad vial - ${nombre}${fecha ? ' - ' + fecha : ''}`;
+        const body = buildMailBody(fd);
+
+        const url = `mailto:${encodeURIComponent(EMAIL_TO)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = url;
+      });
+
+      document.getElementById('btn-print')?.addEventListener('click', () => {
+        window.print();
+      });
+    </script>
+  </body>
+</html>
