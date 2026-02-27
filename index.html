@@ -167,5 +167,58 @@
         </div>
       </footer>
     </main>
+
+    <script>
+      const registroForm = document.querySelector('form[action="https://formspree.io/f/xqedgzde"]');
+
+      function ensureHidden(form, name) {
+        let el = form.querySelector(`input[type="hidden"][name="${CSS.escape(name)}"]`);
+        if (!el) {
+          el = document.createElement('input');
+          el.type = 'hidden';
+          el.name = name;
+          form.appendChild(el);
+        }
+        return el;
+      }
+
+      function ensureHiddenTextArea(form, name) {
+        let el = form.querySelector(`textarea[name="${CSS.escape(name)}"]`);
+        if (!el) {
+          el = document.createElement('textarea');
+          el.name = name;
+          el.setAttribute('hidden', '');
+          form.appendChild(el);
+        }
+        return el;
+      }
+
+      registroForm?.addEventListener('submit', () => {
+        const fd = new FormData(registroForm);
+        const tipo = (fd.get('tipo') ?? '').toString().trim();
+        const nombre = (fd.get('nombre') ?? '').toString().trim();
+        const telefono = (fd.get('telefono') ?? '').toString().trim();
+        const correo = (fd.get('correo') ?? '').toString().trim();
+        const moto = (fd.get('moto') ?? '').toString().trim();
+        const cc = (fd.get('cc') ?? '').toString().trim();
+        const nivel = (fd.get('nivel') ?? '').toString().trim();
+        const comentario = (fd.get('comentario') ?? '').toString().trim();
+
+        ensureHidden('_subject').value = `Registro: ${nombre || 'Participante'}${tipo ? ` (${tipo})` : ''}`;
+
+        const resumen =
+          `REGISTRO – Royaleros Tabasco\n` +
+          `Tipo: ${tipo || '(sin especificar)'}\n` +
+          `Nombre: ${nombre || '(sin nombre)'}\n` +
+          `Teléfono: ${telefono || '(sin teléfono)'}\n` +
+          `Correo: ${correo || '(sin correo)'}\n` +
+          `Motocicleta: ${moto || '(sin moto)'}\n` +
+          `Cilindraje: ${cc || '(sin cc)'}\n` +
+          `Nivel: ${nivel || '(sin nivel)'}\n\n` +
+          `Comentario:\n${comentario || '(sin comentario)'}\n`;
+
+        ensureHiddenTextArea(registroForm, 'resumen').value = resumen;
+      });
+    </script>
   </body>
 </html>

@@ -250,9 +250,53 @@
           return el;
         };
 
+        const ensureHiddenTextArea = (name) => {
+          let el = form.querySelector(`textarea[name="${CSS.escape(name)}"]`);
+          if (!el) {
+            el = document.createElement('textarea');
+            el.name = name;
+            el.setAttribute('hidden', '');
+            form.appendChild(el);
+          }
+          return el;
+        };
+
         ensureHidden('aciertos').value = aciertos;
         ensureHidden('total').value = total;
         ensureHidden('p8_aciertos_clave').value = p8AciertosClave;
+
+        const nombre = (fd.get('nombre') ?? '').toString().trim();
+        const fecha = (fd.get('fecha') ?? '').toString().trim();
+
+        const qa = [
+          ['1) ¿Cuál es la distancia mínima entre dos motociclistas en ruta?', fd.get('p1')],
+          ['2) ¿Cuál es el mejor casco para proteger la cabeza del motociclista?', fd.get('p2')],
+          ['3) En el frenado de emergencia, ¿cuál de los dos frenos se debe aplicar?', fd.get('p3')],
+          ['4) Técnicas de anticipación: prever cualquier invasión en la vía.', fd.get('p4')],
+          ['5) Revisión de neumáticos antes de iniciar a rodar.', fd.get('p5')],
+          ['6) Con lluvia: NO circular sobre marcas del pavimento o zonas deslizantes.', fd.get('p6')],
+          ['7) Con niebla: NO circular a una velocidad que NO permita detenerse dentro del campo de visión.', fd.get('p7')],
+          ['8) ¿Qué es la regla P.A.S, aplicable cuando ocurre un accidente?', fd.get('p8')],
+          ['9) Proceso EEE (Explorar–Evaluar–Ejecutar).', fd.get('p9')],
+          ['10) En intersecciones ocurre la menor cantidad de accidentes (Reporte Hurt - 1988).', fd.get('p10')],
+        ];
+
+        const resumen =
+          `EVALUACIÓN – Royaleros Tabasco\n` +
+          `Nombre: ${nombre}\n` +
+          `Fecha: ${fecha}\n` +
+          `Calificación: ${calificacion}\n` +
+          `Aciertos: ${aciertos}/${total}\n` +
+          `P8 ideas clave: ${p8AciertosClave}\n\n` +
+          qa
+            .map(([q, a]) => {
+              const ans = (a ?? '').toString().trim();
+              return `${q}\nRespuesta: ${ans || '(sin respuesta)'}\n`;
+            })
+            .join('\n');
+
+        ensureHiddenTextArea('resumen').value = resumen;
+        ensureHidden('_subject').value = `Evaluación: ${nombre || 'Participante'} – ${calificacion}`;
 
         form.submit();
       });
