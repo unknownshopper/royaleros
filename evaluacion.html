@@ -78,8 +78,8 @@
               4) En las técnicas de anticipación se debe prever cualquier invasión en la vía. ¿Verdadero o Falso?
             </legend>
             <div class="choices">
-              <label><input type="radio" name="p4" value="V" required /> Verdadero</label>
-              <label><input type="radio" name="p4" value="F" required /> Falso</label>
+              <label><input type="radio" name="p4" value="Verdadero" required /> Verdadero</label>
+              <label><input type="radio" name="p4" value="Falso" required /> Falso</label>
             </div>
           </fieldset>
 
@@ -88,8 +88,8 @@
               5) La revisión de los neumáticos es esencial antes de iniciar a rodar. ¿Verdadero o Falso?
             </legend>
             <div class="choices">
-              <label><input type="radio" name="p5" value="V" required /> Verdadero</label>
-              <label><input type="radio" name="p5" value="F" required /> Falso</label>
+              <label><input type="radio" name="p5" value="Verdadero" required /> Verdadero</label>
+              <label><input type="radio" name="p5" value="Falso" required /> Falso</label>
             </div>
           </fieldset>
 
@@ -98,8 +98,8 @@
               6) Cuando llueve, NO circular sobre las marcas del pavimento o zonas deslizantes. ¿Verdadero o Falso?
             </legend>
             <div class="choices">
-              <label><input type="radio" name="p6" value="V" required /> Verdadero</label>
-              <label><input type="radio" name="p6" value="F" required /> Falso</label>
+              <label><input type="radio" name="p6" value="Verdadero" required /> Verdadero</label>
+              <label><input type="radio" name="p6" value="Falso" required /> Falso</label>
             </div>
           </fieldset>
 
@@ -109,8 +109,8 @@
               ¿Verdadero o Falso?
             </legend>
             <div class="choices">
-              <label><input type="radio" name="p7" value="V" required /> Verdadero</label>
-              <label><input type="radio" name="p7" value="F" required /> Falso</label>
+              <label><input type="radio" name="p7" value="Verdadero" required /> Verdadero</label>
+              <label><input type="radio" name="p7" value="Falso" required /> Falso</label>
             </div>
           </fieldset>
 
@@ -125,8 +125,8 @@
               (Explorar–Evaluar–Ejecutar). ¿Verdadero o Falso?
             </legend>
             <div class="choices">
-              <label><input type="radio" name="p9" value="V" required /> Verdadero</label>
-              <label><input type="radio" name="p9" value="F" required /> Falso</label>
+              <label><input type="radio" name="p9" value="Verdadero" required /> Verdadero</label>
+              <label><input type="radio" name="p9" value="Falso" required /> Falso</label>
             </div>
           </fieldset>
 
@@ -136,8 +136,8 @@
               (Reporte Hurt - 1988). ¿Verdadero o Falso?
             </legend>
             <div class="choices">
-              <label><input type="radio" name="p10" value="V" required /> Verdadero</label>
-              <label><input type="radio" name="p10" value="F" required /> Falso</label>
+              <label><input type="radio" name="p10" value="Verdadero" required /> Verdadero</label>
+              <label><input type="radio" name="p10" value="Falso" required /> Falso</label>
             </div>
           </fieldset>
 
@@ -166,12 +166,12 @@
           p1: '4',
           p2: 'INTEGRAL',
           p3: 'AMBOS',
-          p4: 'V',
-          p5: 'V',
-          p6: 'V',
-          p7: 'F',
-          p9: 'V',
-          p10: 'V',
+          p4: 'VERDADERO',
+          p5: 'VERDADERO',
+          p6: 'VERDADERO',
+          p7: 'FALSO',
+          p9: 'VERDADERO',
+          p10: 'VERDADERO',
         };
 
         function normalize(s) {
@@ -183,14 +183,21 @@
             .replace(/\p{Diacritic}/gu, '');
         }
 
+        function normalizeVF(s) {
+          const n = normalize(s);
+          if (n === 'v' || n === 'verdadero') return 'VERDADERO';
+          if (n === 'f' || n === 'falso') return 'FALSO';
+          return n.toUpperCase();
+        }
+
         let total = 0;
         let correct = 0;
 
         for (const key of Object.keys(answers)) {
           total += 1;
           const gotRaw = fd.get(key);
-          const got = normalize(gotRaw).toUpperCase();
-          const expected = normalize(answers[key]).toUpperCase();
+          const got = normalizeVF(gotRaw);
+          const expected = normalizeVF(answers[key]);
           if (got === expected) correct += 1;
         }
 
@@ -227,24 +234,27 @@
         const calificacion = `${score.percent}% (${score.correct}/${score.total})`;
 
         if (calificacionInput) calificacionInput.value = calificacion;
-        fd.set('calificacion', calificacion);
-        fd.set('aciertos', String(score.correct));
-        fd.set('total', String(score.total));
-        fd.set('p8_aciertos_clave', `${score.p8Hits}/${score.p8Groups}`);
 
-        const res = await fetch(form.action, {
-          method: 'POST',
-          body: fd,
-          headers: {
-            Accept: 'application/json',
-          },
-        });
+        const aciertos = String(score.correct);
+        const total = String(score.total);
+        const p8AciertosClave = `${score.p8Hits}/${score.p8Groups}`;
 
-        if (res.ok) {
-          alert('Resultados enviados. ¡Gracias!');
-        } else {
-          alert('No se pudo enviar. Intenta de nuevo.');
-        }
+        const ensureHidden = (name) => {
+          let el = form.querySelector(`input[type="hidden"][name="${CSS.escape(name)}"]`);
+          if (!el) {
+            el = document.createElement('input');
+            el.type = 'hidden';
+            el.name = name;
+            form.appendChild(el);
+          }
+          return el;
+        };
+
+        ensureHidden('aciertos').value = aciertos;
+        ensureHidden('total').value = total;
+        ensureHidden('p8_aciertos_clave').value = p8AciertosClave;
+
+        form.submit();
       });
     </script>
 
